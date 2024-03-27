@@ -39,6 +39,16 @@ const Products = sequelize.define("product", {
     type: Sequelize.STRING,
     allowNull: true,
   },
+
+  productPrice: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+  },
+
+  productQuantity: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+  },
 });
 
 module.exports = Products;
