@@ -15,34 +15,43 @@ exports.getAllProducts = async (req, res, next) => {
 };
 
 exports.addProduct = async (req, res, next) => {
-  // const {
-  //   productName,
-  //   productBrand,
-  //   productDesc,
-  //   productImage,
-  //   productCategory,
-  //   productURL,
-  //   productPrice,
-  //   productQuantity,
-  // } = req.body;
+  const {
+    productName,
+    productBrand,
+    productDesc,
+    productImage,
+    productCategory,
+    productPrice,
+    productQuantity,
+  } = req.body;
 
 
   try {
-    for (const data of Data) {
-      // console.log(data)
-      const product = await Products.create({
-        productName: data.productName || data.title,
-        productBrand: data.productBrand || data.brand,
-        productDesc: data.productName || data.title,
-        productImage: data.productImageUrl || data.image,
-        productCategory: "Jeans",
-        productPrice: data.productPrice || data.price,
-        productQuantity: "5",
-      });
-      // console.log(product)
-      // break;
-    }
-    res.status(200).json("Created");
+    // for (const data of Data) {
+    // console.log(data)
+    // const product = await Products.create({
+    //   productName: data.productName || data.title,
+    //   productBrand: data.productBrand || data.brand,
+    //   productDesc: data.productName || data.title,
+    //   productImage: data.productImageUrl || data.image,
+    //   productCategory: "Jeans",
+    //   productPrice: data.productPrice || data.price,
+    //   productQuantity: "5",
+    // });
+    // console.log(product)
+    // break;
+    // }
+
+    const product = await Products.create({
+      productName,
+      productBrand,
+      productDesc,
+      productImage,
+      productCategory,
+      productPrice,
+      productQuantity,
+    });
+    res.status(200).json(product);
   } catch (error) {
     console.log(error);
   }
