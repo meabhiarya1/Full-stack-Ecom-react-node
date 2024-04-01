@@ -1,7 +1,10 @@
 const Products = require("../models/product");
+const Data = require("../controllers/jsondata")
+
 
 exports.getAllProducts = async (req, res, next) => {
   try {
+    console.log(Data)
     const product = await Products.findAll();
     res.status(200).json({
       product,
@@ -11,29 +14,35 @@ exports.getAllProducts = async (req, res, next) => {
   }
 };
 
-exports.postProduct = async (req, res, next) => {
-  const {
-    productName,
-    productBrand,
-    productDesc,
-    productImage,
-    productCategory,
-    productURL,
-    productPrice,
-    productQuantity,
-  } = req.body;
+exports.addProduct = async (req, res, next) => {
+  // const {
+  //   productName,
+  //   productBrand,
+  //   productDesc,
+  //   productImage,
+  //   productCategory,
+  //   productURL,
+  //   productPrice,
+  //   productQuantity,
+  // } = req.body;
+
+
   try {
-    const product = await Products.create({
-      productName,
-      productBrand,
-      productDesc,
-      productImage,
-      productCategory,
-      productURL,
-      productPrice,
-      productQuantity,
-    });
-    res.status(200).json(product);
+    for (const data of Data) {
+      // console.log(data)
+      const product = await Products.create({
+        productName: data.productName || data.title,
+        productBrand: data.productBrand || data.brand,
+        productDesc: data.productName || data.title,
+        productImage: data.productImageUrl || data.image,
+        productCategory: "Jeans",
+        productPrice: data.productPrice || data.price,
+        productQuantity: "5",
+      });
+      // console.log(product)
+      // break;
+    }
+    res.status(200).json("Created");
   } catch (error) {
     console.log(error);
   }

@@ -12,7 +12,7 @@ app.use(productRoutes);
 const PORT = process.env.PORT || 4000;
 
 sequelize
-  .sync({ force: false })
+  .sync({ force: true })
   .then((user) => {
     // console.log(user);
     app.listen(PORT, console.log(`Server started on port ${PORT}`));
