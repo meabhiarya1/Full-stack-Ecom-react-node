@@ -1,10 +1,9 @@
 const Products = require("../models/product");
-const Data = require("../controllers/jsondata")
-
+const Data = require("../controllers/jsondata");
 
 exports.getAllProducts = async (req, res, next) => {
   try {
-    console.log(Data)
+    console.log(Data);
     const product = await Products.findAll();
     res.status(200).json({
       product,
@@ -24,22 +23,22 @@ exports.addProduct = async (req, res, next) => {
     productPrice,
     productQuantity,
   } = req.body;
-
-
+  // console.log(Data);
   try {
+    // let product;
     // for (const data of Data) {
-    // console.log(data)
-    // const product = await Products.create({
-    //   productName: data.productName || data.title,
-    //   productBrand: data.productBrand || data.brand,
-    //   productDesc: data.productName || data.title,
-    //   productImage: data.productImageUrl || data.image,
-    //   productCategory: "Jeans",
-    //   productPrice: data.productPrice || data.price,
-    //   productQuantity: "5",
-    // });
-    // console.log(product)
-    // break;
+    //   console.log(data);
+    //   product = await Products.create({
+    //     productName: data.productName || data.title,
+    //     productBrand: data.productBrand || data.brand,
+    //     productDesc: data.productName || data.title,
+    //     productImage: data.productImageUrl || data.image,
+    //     productCategory: "Jeans",
+    //     productPrice: data.productPrice || data.price,
+    //     productQuantity: "5",
+    //   });
+    //   // console.log(product)
+    //   // break;
     // }
 
     const product = await Products.create({
