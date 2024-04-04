@@ -23,13 +23,13 @@ const Home = () => {
               />
             </div>
 
-            <div className="px-2 text-xl md:mx-2 mx-[1px] font-bold font-medium sm:font-bold text-[1rem] md:text-[20px]rem] md:text-[20px]">
+            <div className="p-2 text-sm md:mx-2 font-bold font-medium sm:font-medium md:text-[15px] hover:bg-black border-2 hover:cursor-pointer rounded-xl mr-1">
               Home
             </div>
 
-            <div className="px-2 text-xl md:mx-2 mx-[1px] font-bold font-medium sm:font-bold text-[1rem] md:text-[20px]">Men</div>
-            <div className="px-2 text-xl md:mx-2 mx-[1px] font-bold font-medium sm:font-bold text-[1rem] md:text-[20px]">Women</div>
-            <div className="px-2 text-xl md:mx-2 mx-[1px] font-bold font-medium sm:font-bold text-[1rem] md:text-[20px]">Kids</div>
+            <div className="p-2 text-sm md:mx-2 font-bold font-medium sm:font-medium md:text-[15px] hover:bg-black border-2 hover:cursor-pointer rounded-xl mr-1">Men</div>
+            <div className="p-2 text-sm md:mx-2 font-bold font-medium sm:font-medium md:text-[15px] hover:bg-black border-2 hover:cursor-pointer rounded-xl mr-1">Women</div>
+            <div className="p-2 text-sm md:mx-2 font-bold font-medium sm:font-medium md:text-[15px] hover:bg-black border-2 hover:cursor-pointer rounded-xl">Kids</div>
           </div>
 
           {/* right sidebar */}
@@ -43,14 +43,14 @@ const Home = () => {
               <button className="font-medium text-sm" onClick={() => navigate("/login")}>Customer</button>
             </div>
 
-            <div className="bg-[#14628f] border-2 flex items-center p-2 rounded-xl hover:bg-black mx-3 hover:cursor-pointer hidden lg:flex">
+            <div className="bg-[#14628f] flex items-center p-2 rounded-xl hover:bg-black mx-3 border-2  hover:cursor-pointer hidden lg:flex">
               <button className="font-medium text-sm" onClick={() => navigate("/sellerlogin")}>Seller</button>
             </div>
 
             <div className="flex items-center text-xl md:text-3xl mr-1 sm:flex hidden">
               <FaCartArrowDown style={{ cursor: "pointer" }} />
             </div>
-            <div className="flex items-center text-3xl mr-1 sm:hidden flex h-40">
+            <div className="flex items-center text-3xl sm:hidden flex h-40">
               <IoReorderThree style={{ cursor: "pointer" }} />
             </div>
           </div>
