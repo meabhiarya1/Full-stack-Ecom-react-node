@@ -3,11 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { FaCartArrowDown } from "react-icons/fa";
 import { IoReorderThree } from "react-icons/io5";
-
+import { useSelector } from 'react-redux';
 
 const Home = () => {
 
   const navigate = useNavigate();
+
+  const productData = useSelector(state => state);
 
   return (
     <div >
@@ -60,6 +62,20 @@ const Home = () => {
           <input type="search" className="p-1 rounded-full border-0 text-black w-full" placeholder="Search Here!!!" />
           <CiSearch style={{ color: "black", marginRight: "5px", cursor: "pointer" }} />
         </div>
+
+      </div>
+      <div>
+        {productData.map((product, index) => (
+          <div key={index}>
+            <img src={product.productImage} alt={product.productName} />
+            <h2>{product.productName}</h2>
+            <p>Brand: {product.productBrand}</p>
+            <p>Category: {product.productCategory}</p>
+            <p>Description: {product.productDesc}</p>
+            <p>Price: {product.productPrice}</p>
+            <p>Quantity: {product.productQuantity}</p>
+          </div>
+        ))}
       </div>
     </div>
   );

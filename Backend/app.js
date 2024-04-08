@@ -2,10 +2,11 @@ const express = require("express");
 const sequelize = require("./Utils/database");
 const productRoutes = require("./routes/product");
 const bodyParser = require('body-parser');
-
+const cors = require("cors")
 const app = express();
 
 app.use(bodyParser.json());
+app.use(cors())
 
 app.use(productRoutes);
 

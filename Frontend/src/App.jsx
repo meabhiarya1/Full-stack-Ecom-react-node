@@ -5,8 +5,23 @@ import Signup from "./Pages/Signup";
 import Home from "./Pages/Home";
 import Signupseller from "./Pages/Signupseller";
 import Loginseller from "./Pages/Loginseller";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { dataSliceActions } from "./Store/dataReducer";
+import axios from "axios";
 
 function App() {
+  const dispatch = useDispatch()
+  const dataState = useSelector(state => state)
+  console.log(dataState)
+  useEffect(() => {
+    axios.get("http://localhost:4000/").then((response) => {
+      dispatch(dataSliceActions.addData(response.data.product))
+    }).catch((err) => {
+      console.log(err)
+    })
+  }, [])
+
   return (
     <>
       <Routes>
