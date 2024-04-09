@@ -6,15 +6,13 @@ import { IoReorderThree } from "react-icons/io5";
 import { useSelector } from 'react-redux';
 
 const Home = () => {
-
   const navigate = useNavigate();
-
   const productData = useSelector(state => state);
 
   return (
-    <div >
+    <div>
       <div className="bg-[#14628f] md:rounded-b-xl  rounded-b-2xl">
-        <div className="h-20 flex items-center justify-between w-[100vw] ">
+        <div className="h-20 flex items-center justify-between w-full ">
 
           {/* left navbar */}
           <div className="flex items-center justify-center ">
@@ -35,7 +33,7 @@ const Home = () => {
           </div>
 
           {/* right sidebar */}
-          <div className="flex mx-2">
+          <div className="flex mx-4">
             <div className="flex items-center bg-white md:text-sm rounded-full mx-1 sm:flex hidden">
               <input type="search" className="p-1 rounded-full border-0 text-black" placeholder="Search Here!!!" />
               <CiSearch style={{ color: "black", marginRight: "5px", cursor: "pointer" }} />
@@ -64,23 +62,32 @@ const Home = () => {
         </div>
 
       </div>
-      <div>
-        {productData.map((product, index) => (
-          <div key={index}>
-            <img src={product.productImage} alt={product.productName} />
-            <h2>{product.productName}</h2>
-            <p>Brand: {product.productBrand}</p>
-            <p>Category: {product.productCategory}</p>
-            <p>Description: {product.productDesc}</p>
-            <p>Price: {product.productPrice}</p>
-            <p>Quantity: {product.productQuantity}</p>
-          </div>
-        ))}
+
+      <div className="h-auto w-full flex ">
+        <div className="w-1/3 mx-2">
+          abhishek
+        </div>
+        <div className="flex flex-wrap w-full justify-evenly items-center">
+          {productData.map((product, index) => (
+            <div key={index} className="border h-auto my-8 rounded-xl bg-white text-black max-w-[18rem]">
+              <div className="w-full flex items-center justify-center p-3">
+                <img className="h-[20rem] rounded-xl shadow-xl shadow-regal-blue mb-4" src={product.productImage} alt={product.productName} />
+              </div>
+     
+              <div className="flex flex-start px-2 font-bold text-sm items-center justify-center">{product.productBrand}</div>
+
+              <div className="flex flex-start p-1 font-semibold text-sm items-center justify-center mb-2">{product.productName}</div>
+
+              {/* <div>Category: {product.productCategory}</div>
+              <div>Description: {product.productDesc}</div>
+              <div>Price: {product.productPrice}</div>
+              <div>Quantity: {product.productQuantity}</div> */}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
 };
 
 export default Home;
-
-// https://websitedemos.net/brandstore-02/?customize=template
