@@ -1,6 +1,12 @@
 import dataSliceReducer from "./dataReducer";
-import { configureStore } from '@reduxjs/toolkit'
+import cartSliceReducer from "./dataReducer"; // for demo purpose
+import { configureStore } from "@reduxjs/toolkit";
 
-const Store = configureStore({ reducer: dataSliceReducer })
+const Store = configureStore({
+  reducer: {
+    data: dataSliceReducer,
+    cart: cartSliceReducer, // for demo purpose
+  },
+});
 
 export default Store;

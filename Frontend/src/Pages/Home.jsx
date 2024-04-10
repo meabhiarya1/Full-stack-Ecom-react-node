@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 
 const Home = () => {
   const navigate = useNavigate();
-  const productData = useSelector((state) => state);
+  const productData = useSelector((state) => state.data);
 
   return (
     <div>
