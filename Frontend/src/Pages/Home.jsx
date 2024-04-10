@@ -107,13 +107,14 @@ const Home = () => {
               style={{ color: "white", marginRight: "8px", cursor: "pointer", fontWeight: "bolder", fontSize: "25px" }}
             /></div>
           </div>
-          {[...new Set(productData.map(product => product.productBrand))].map((brand, index) => (
-
-            <div key={index} className="flex justify-start my-4 items-center">
-              <input type="checkbox" className="mx-2 w-3 sm:w-4 h-4 cursor-pointer" />
-              <div className="sm:text-sm text-xs">{brand}</div>
-            </div>
-          ))}
+          <div className="h-[100px] overflow-y-scroll mt-4">
+            {[...new Set(productData.map(product => product.productBrand))].map((brand, index) => (
+              <div key={index} className="flex justify-start my-3 items-center">
+                <input type="checkbox" className="mx-2 w-3 sm:w-4 h-4 cursor-pointer" />
+                <div className="sm:text-sm text-xs">{brand}</div>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Right Sidebar */}
