@@ -11,12 +11,17 @@ import { dataSliceActions } from "./Store/dataReducer";
 import axios from "axios";
 
 function App() {
+
   const dispatch = useDispatch()
   const dataState = useSelector(state => state)
   console.log(dataState)
+
   useEffect(() => {
     axios.get("http://localhost:5000/").then((response) => {
-      dispatch(dataSliceActions.addData(response.data.product))
+
+      dispatch(dataSliceActions.addData(response.data.product)) 
+      // dispatch(cartSliceActions.addData(response.data.product)) 
+
     }).catch((err) => {
       console.log(err)
     })

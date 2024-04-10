@@ -1,18 +1,19 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
-
-const initialState = []
+const initialState = [];
 
 // naming on the requirement
 const dataSlice = createSlice({
-    name: "dataHandler", initialState: initialState, reducers: {
-        addData(state, action) {
-          return state = action.payload;
-        }
-    }
-})
+  name: "dataHandler",
+  initialState: initialState,
+  reducers: {
+    addData(state, action) {
+      return (state = action.payload);
+    },
+  },
+});
 
-export const dataSliceActions = dataSlice.actions
-const dataSliceReducer = dataSlice.reducer
+export const dataSliceActions = dataSlice.actions;
+const dataSliceReducer = dataSlice.reducer;
 
 export default dataSliceReducer;

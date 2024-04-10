@@ -3,11 +3,17 @@ import { useNavigate } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { FaCartArrowDown } from "react-icons/fa";
 import { IoReorderThree } from "react-icons/io5";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { cartSliceActions } from "../Store/cartReducer";
 
 const Home = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const productData = useSelector((state) => state.data);
+  const cartData = useSelector((state) => state.cart);
+
+  console.log(productData);
 
   return (
     <div>
@@ -125,6 +131,14 @@ const Home = () => {
           ))}
         </div>
       </div>
+
+      <button
+        onClick={() => {
+          dispatch(cartSliceActions.addItem(1));
+        }}
+      >
+        Display
+      </button>
     </div>
   );
 };
