@@ -109,11 +109,11 @@ const Home = () => {
                 />
               </div>
 
-              <div className="flex flex-start px-2 font-bold text-sm items-center justify-center">
+              <div className="flex flex-start px-2 sm:font-bold font-semibold text-sm items-center justify-center">
                 {product.productBrand}
               </div>
 
-              <div className="flex flex-start p-1 font-semibold text-sm items-center justify-center mb-2">
+              <div className="flex p-1 pl-2 sm:font-semibold text-xs mb-3 h-8 justify-center ">
                 {product.productName}
               </div>
 
