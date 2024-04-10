@@ -43,19 +43,17 @@ const Home = () => {
             </div>
           </div>
 
-          {/* right sidebar */}
+          {/* right navbar */}
           <div className="flex mx-4">
-            <div className="items-center bg-white md:text-sm rounded-full mx-1 sm:flex hidden">
+            <div className="items-center bg-white md:text-sm rounded-xl mx-1 sm:flex hidden cursor-pointer">
               <input
                 type="search"
-                className="p-1 rounded-full border-0 text-black"
+                className="p-1 m-1 rounded-xl no-border outline-none text-black"
                 placeholder="Search Here!!!"
               />
               <CiSearch
                 style={{
-                  color: "black",
-                  marginRight: "5px",
-                  cursor: "pointer",
+                  color: "black", marginRight: "8px", cursor: "pointer", fontWeight: "bolder", fontSize: "1.5rem"
                 }}
               />
             </div>
@@ -90,17 +88,35 @@ const Home = () => {
         <div className="flex items-center bg-white md:text-sm rounded-full sm:hidden mx-[2px]">
           <input
             type="search"
-            className="p-1 rounded-full border-0 text-black w-full"
+            className="p-1 rounded-full border-0 text-black w-full ml-3 outline-none"
             placeholder="Search Here!!!"
           />
           <CiSearch
-            style={{ color: "black", marginRight: "5px", cursor: "pointer" }}
+            style={{ color: "black", marginRight: "8px", cursor: "pointer", fontWeight: "bolder", fontSize: "1.5rem" }}
           />
         </div>
       </div>
 
       <div className="h-auto w-full flex ">
-        <div className="w-1/3 mx-2">abhishek</div>
+        {/* Left sidebar */}
+        <div className="w-1/3 mx-2">
+          <div className="flex font-semibold justify-center p-1 my-8 sm:text-sm bg-white text-black rounded-xl ml-2 text-xs">FILTERS</div>
+          <div className="flex justify-between border-2 rounded-xl sm:p-2 p-1 items-center ml-2">
+            <div className="flex justify-center ml-4 font-semibold sm:text-sm text-xs">Brand</div>
+            <div className="sm:flex hidden"><CiSearch
+              style={{ color: "white", marginRight: "8px", cursor: "pointer", fontWeight: "bolder", fontSize: "25px" }}
+            /></div>
+          </div>
+          {[...new Set(productData.map(product => product.productBrand))].map((brand, index) => (
+
+            <div key={index} className="flex justify-start my-4 items-center">
+              <input type="checkbox" className="mx-2 w-3 sm:w-4 h-4 cursor-pointer" />
+              <div className="sm:text-sm text-xs">{brand}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Right Sidebar */}
         <div className="flex flex-wrap w-full justify-evenly items-center">
           {productData.map((product, index) => (
             <div
@@ -132,13 +148,13 @@ const Home = () => {
         </div>
       </div>
 
-      <button
+      {/* <button
         onClick={() => {
           dispatch(cartSliceActions.addItem(1));
         }}
       >
         Display
-      </button>
+      </button> */}
     </div>
   );
 };
