@@ -15,7 +15,7 @@ function App() {
   const dataState = useSelector(state => state)
   console.log(dataState)
   useEffect(() => {
-    axios.get("http://localhost:4000/").then((response) => {
+    axios.get("http://localhost:5000/").then((response) => {
       dispatch(dataSliceActions.addData(response.data.product))
     }).catch((err) => {
       console.log(err)
