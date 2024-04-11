@@ -1,0 +1,20 @@
+.input {
+  @apply w-52 h-12 border-none outline-none px-3 rounded text-white text-base bg-transparent;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 1),
+    -1px -1px 6px rgba(255, 255, 255, 0.4);
+}
+
+.input:focus {
+  @apply border-2 border-transparent;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 1),
+    -1px -1px 6px rgba(255, 255, 255, 0.4), inset 3px 3px 10px rgba(0, 0, 0, 1),
+    inset -1px -1px 6px rgba(255, 255, 255, 0.4);
+}
+
+.label {
+  @apply text-white text-base transition-transform;
+}
+
+.container {
+  @apply flex flex-col gap-7 relative text-white;
+}

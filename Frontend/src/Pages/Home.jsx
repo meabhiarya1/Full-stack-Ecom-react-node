@@ -14,7 +14,7 @@ const Home = () => {
   const productData = useSelector((state) => state.data);
   const cartData = useSelector((state) => state.cart);
 
-  console.log(productData);
+  // console.log(productData);
 
   return (
     <div>
