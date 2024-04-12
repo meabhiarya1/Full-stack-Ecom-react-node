@@ -1,8 +1,40 @@
-import React from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
 
 const Login = () => {
   const navigate = useNavigate();
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  })
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios.post("http://localhost:5000/login", {
+      email: user.email,
+      password: user.password,
+    }).then((response) => {
+      alert(response.data.message);
+      setUser({
+        email: "",
+        password: "",
+      });
+      console.log(response.data);
+      alert(response.data);
+    }).catch(err => {
+      console.log(err);
+    });
+  };
+  
+
+  const handleChange = (e) => {
+    setUser({
+      ...user,
+      [e.target.name]: e.target.value
+    })
+  }
 
   return (
     <>
@@ -23,7 +55,7 @@ const Login = () => {
           >
             Sign in to your account
           </p>
-          <form method="POST" action="#" className="space-y-6">
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="relative">
               <input
                 placeholder="john@example.com"
@@ -33,10 +65,12 @@ const Login = () => {
                 name="email"
                 type="email"
                 autoComplete="off"
+                onChange={handleChange}
               />
               <label
                 className="absolute left-0 -top-3.5 text-gray-500 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-purple-500 peer-focus:text-sm"
                 htmlFor="email" // Using htmlFor instead of for as per React's convention
+
               >
                 Email address
               </label>
@@ -51,10 +85,10 @@ const Login = () => {
                 name="password"
                 type="password"
                 autoComplete="off"
+                onChange={handleChange}
               />
               <label
                 className="absolute left-0 -top-3.5 text-gray-500 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-purple-500 peer-focus:text-sm"
-                for="password"
               >
                 Password
               </label>
