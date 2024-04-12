@@ -1,8 +1,53 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Signup = () => {
   const navigate = useNavigate();
+
+  // const nameRef = useRef(null)
+  // const emailRef = useRef(null)
+  // const passwordRef = useRef(null)
+  // const numberRef = useRef(null)
+
+  const [userDetails, setUserdetails] = useState({
+    name: "",
+    email: "",
+    password: "",
+    number: ""
+  })
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios.post("http://localhost:5000/adduser", {
+      name: userDetails.name,
+      email: userDetails.email,
+      password: userDetails.password,
+      number: userDetails.number
+    }).then((response) => {
+      setUserdetails({
+        name: "",
+        email: "",
+        password: "",
+        number: ""
+      })
+
+      console.log(response)
+      alert(response.data)
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+
+  console.log(userDetails)
+
+  const handleChange = (e) => {
+    // console.log(e.target.name)
+    setUserdetails({
+      ...userDetails,
+      [e.target.name]: e.target.value
+    })
+  }
 
   return (
     <div className="flex justify-center items-center h-screen ">
@@ -22,7 +67,27 @@ const Signup = () => {
         >
           Sign up your account
         </p>
-        <form method="POST" action="#" className="space-y-6">
+        <form className="space-y-6" onSubmit={handleSubmit}>
+          <div className="relative">
+            <input
+              placeholder="john"
+              className="peer h-10 w-full border-b-2 border-gray-300 text-white bg-transparent placeholder-transparent focus:outline-none focus:border-purple-500 p-1"
+              required=""
+              id="name"
+              name="name"
+              type="text"
+              autoComplete="off"
+              // ref={nameRef}
+              onChange={handleChange}
+              value={userDetails.name}
+            />
+            <label
+              className="absolute left-0 -top-3.5 text-gray-500 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-purple-500 peer-focus:text-sm"
+            >
+              Your Name
+            </label>
+          </div>
+
           <div className="relative">
             <input
               placeholder="john@example.com"
@@ -32,10 +97,11 @@ const Signup = () => {
               name="email"
               type="email"
               autoComplete="off"
+              // ref={emailRef}
+              onChange={handleChange}
             />
             <label
               className="absolute left-0 -top-3.5 text-gray-500 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-purple-500 peer-focus:text-sm"
-              htmlFor="email" // Using htmlFor instead of for as per React's convention
             >
               Email address
             </label>
@@ -50,10 +116,12 @@ const Signup = () => {
               name="password"
               type="password"
               autoComplete="off"
+              // ref={passwordRef}
+              onChange={handleChange}
             />
             <label
               className="absolute left-0 -top-3.5 text-gray-500 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-purple-500 peer-focus:text-sm"
-              for="password"
+              htmlFor="password"
             >
               Password
             </label>
@@ -68,10 +136,12 @@ const Signup = () => {
               name="number"
               type="number"
               autoComplete="off"
+              // ref={numberRef}
+              onChange={handleChange}
             />
             <label
               className="absolute left-0 -top-3.5 text-gray-500 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-purple-500 peer-focus:text-sm"
-              for="password"
+              htmlFor="password"
             >
               Mobile Number
             </label>
