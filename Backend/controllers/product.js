@@ -3,7 +3,7 @@ const Data = require("../controllers/jsondata");
 
 exports.getAllProducts = async (req, res, next) => {
   try {
-    console.log(Data);
+    // console.log(Data);
     const product = await Products.findAll();
     res.status(200).json({
       product,
@@ -59,7 +59,7 @@ exports.addProduct = async (req, res, next) => {
 exports.deleteProduct = async (req, res, next) => {
   try {
     const productToDelete = await Products.findByPk(req.params.id);
-    console.log(productToDelete);
+    // console.log(productToDelete);
     if (!productToDelete) {
       return res.status(404).json({ message: "Product not found" });
     }

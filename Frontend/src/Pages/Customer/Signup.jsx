@@ -14,30 +14,34 @@ const Signup = () => {
     name: "",
     email: "",
     password: "",
-    number: ""
-  })
+    number: "",
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:5000/adduser", {
-      name: userDetails.name,
-      email: userDetails.email,
-      password: userDetails.password,
-      number: userDetails.number
-    }).then((response) => {
-      setUserdetails({
-        name: "",
-        email: "",
-        password: "",
-        number: ""
+    axios
+      .post("http://localhost:5000/adduser", {
+        name: userDetails.name,
+        email: userDetails.email,
+        password: userDetails.password,
+        number: userDetails.number,
       })
-
-      console.log(response)
-      alert(response.data)
-    }).catch(err => {
-      console.log(err)
-    })
-  }
+      .then((response) => {
+        localStorage.setItem("token", response.data.token);
+        setUserdetails({
+          name: "",
+          email: "",
+          password: "",
+          number: "",
+        });
+        navigate("/");
+        console.log(response);
+        // alert(response.data)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   // console.log(userDetails)
 
@@ -45,9 +49,9 @@ const Signup = () => {
     // console.log(e.target.name)
     setUserdetails({
       ...userDetails,
-      [e.target.name]: e.target.value
-    })
-  }
+      [e.target.name]: e.target.value,
+    });
+  };
 
   return (
     <div className="flex justify-center items-center h-screen ">
@@ -81,9 +85,7 @@ const Signup = () => {
               onChange={handleChange}
               value={userDetails.name}
             />
-            <label
-              className="absolute left-0 -top-3.5 text-gray-500 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-purple-500 peer-focus:text-sm"
-            >
+            <label className="absolute left-0 -top-3.5 text-gray-500 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-purple-500 peer-focus:text-sm">
               Your Name
             </label>
           </div>
@@ -101,9 +103,7 @@ const Signup = () => {
               onChange={handleChange}
               value={userDetails.email}
             />
-            <label
-              className="absolute left-0 -top-3.5 text-gray-500 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-purple-500 peer-focus:text-sm"
-            >
+            <label className="absolute left-0 -top-3.5 text-gray-500 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-purple-500 peer-focus:text-sm">
               Email address
             </label>
           </div>

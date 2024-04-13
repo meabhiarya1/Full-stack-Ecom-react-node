@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { FaCartArrowDown } from "react-icons/fa";
 import { IoReorderThree } from "react-icons/io5";
 import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { CgProfile } from "react-icons/cg";
+
 import { cartSliceActions } from "../../Store/cartReducer";
 import "./scrollbar.css";
+import axios from "axios";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -13,11 +17,37 @@ const Home = () => {
 
   const productData = useSelector((state) => state.data);
   const cartData = useSelector((state) => state.cart);
+  const [userId, setUserId] = useState(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  // const handleToggleDropdown = () => {
+  //   setIsDropdownOpen(!isDropdownOpen);
+  // };
 
   // console.log(productData);
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    // console.log(token)
+    const verifyToken = async () => {
+      try {
+        const response = await axios.post("http://localhost:5000/verify", {
+          token,
+        });
+        const userId = response.data.userId;
+        setUserId(userId);
+
+        // console.log(userId);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    verifyToken();
+  }, []);
+
   return (
     <div>
+      {/* Navbar */}
       <div className="bg-[#14628f] md:rounded-b-xl  rounded-b-2xl">
         <div className="h-20 flex items-center justify-between w-full ">
           {/* left navbar */}
@@ -63,27 +93,65 @@ const Home = () => {
               />
             </div>
 
-            <div className="bg-[#14628f] border-2 items-center p-2 rounded-xl hover:bg-black mx-2 hover:cursor-pointer hidden lg:flex">
-              <button
-                className="font-medium text-sm"
-                onClick={() => navigate("/login")}
-              >
-                Customer
-              </button>
-            </div>
+            {!userId && (
+              <div className="bg-[#14628f] border-2 items-center p-2 rounded-xl hover:bg-black mx-2 hover:cursor-pointer hidden lg:flex">
+                <button
+                  className="font-medium text-sm"
+                  onClick={() => navigate("/login")}
+                >
+                  Customer
+                </button>
+              </div>
+            )}
 
-            <div className="bg-[#14628f] items-center p-2 rounded-xl hover:bg-black mx-3 border-2  hover:cursor-pointer hidden lg:flex">
-              <button
-                className="font-medium text-sm"
-                onClick={() => navigate("/sellerlogin")}
-              >
-                Seller
-              </button>
-            </div>
+            {!userId && (
+              <div className="bg-[#14628f] items-center p-2 rounded-xl hover:bg-black mx-3 border-2  hover:cursor-pointer hidden lg:flex">
+                <button
+                  className="font-medium text-sm"
+                  onClick={() => navigate("/sellerlogin")}
+                >
+                  Seller
+                </button>
+              </div>
+            )}
 
-            <div className=" items-center text-xl md:text-3xl mr-1 sm:flex hidden">
+            <div className=" items-center text-xl md:text-3xl mx-2 sm:flex hidden">
               <FaCartArrowDown style={{ cursor: "pointer" }} />
             </div>
+
+            <div className="relative">
+              {userId && (
+                <div
+                  className="items-center text-xl md:text-3xl mx-2 mt-1 sm:flex hidden"
+                  onMouseEnter={() => setIsDropdownOpen(true)}
+                  onMouseLeave={() => setIsDropdownOpen(false)}
+                >
+                  <CgProfile style={{ cursor: "pointer" }} />
+                </div>
+              )}
+
+              {isDropdownOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg">
+                  <div className="py-1">
+                    {/* Profile link */}
+                    <a
+                      href="#"
+                      className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                    >
+                      Profile
+                    </a>
+                    {/* Logout link */}
+                    <a
+                      href="#"
+                      className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                    >
+                      Logout
+                    </a>
+                  </div>
+                </div>
+              )}
+            </div>
+
             <div className=" items-center text-3xl sm:hidden flex h-40">
               <IoReorderThree style={{ cursor: "pointer" }} />
             </div>
