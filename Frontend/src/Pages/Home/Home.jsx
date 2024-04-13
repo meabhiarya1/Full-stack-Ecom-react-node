@@ -4,7 +4,7 @@ import { CiSearch } from "react-icons/ci";
 import { FaCartArrowDown } from "react-icons/fa";
 import { IoReorderThree } from "react-icons/io5";
 import { useSelector, useDispatch } from "react-redux";
-import { cartSliceActions } from "../Store/cartReducer";
+import { cartSliceActions } from "../../Store/cartReducer";
 import "./scrollbar.css";
 
 const Home = () => {

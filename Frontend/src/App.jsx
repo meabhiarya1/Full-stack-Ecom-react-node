@@ -2,9 +2,9 @@
 import { Route, Routes } from "react-router-dom";
 import Login from "./Pages/Customer/Login";
 import Signup from "./Pages/Customer/Signup";
-import Home from "./Pages/Home";
-import Signupseller from "./Pages/Signupseller";
-import Loginseller from "./Pages/Loginseller";
+import Home from "./Pages/Home/Home";
+import Signupseller from "./Pages/Seller/Signupseller";
+import Loginseller from "./Pages/Seller/Loginseller";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { dataSliceActions } from "./Store/dataReducer";
