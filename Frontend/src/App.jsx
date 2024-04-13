@@ -1,7 +1,7 @@
 // import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import Login from "./Pages/Login";
-import Signup from "./Pages/Signup";
+import Login from "./Pages/Customer/Login";
+import Signup from "./Pages/Customer/Signup";
 import Home from "./Pages/Home";
 import Signupseller from "./Pages/Signupseller";
 import Loginseller from "./Pages/Loginseller";
