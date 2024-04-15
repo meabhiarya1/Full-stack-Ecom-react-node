@@ -10,10 +10,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { dataSliceActions } from "./Store/dataReducer";
 import axios from "axios";
 import ProductDetail from "./Pages/ProductDetail/ProductDetail";
+import { productSliceActions } from "./Store/productReducer";
 
 function App() {
   const dispatch = useDispatch();
   const dataState = useSelector((state) => state);
+  const productState = useSelector((state) => state);
   // console.log(dataState)
 
   useEffect(() => {
@@ -21,8 +23,9 @@ function App() {
       .get("http://localhost:5000/")
       .then((response) => {
         console.log(response.data.product);
-        dispatch(dataSliceActions.addData(response.data.product));
+        // dispatch(dataSliceActions.addData(response.data.product));
         // dispatch(cartSliceActions.addData(response.data.product))
+        dispatch(productSliceActions.addData(response.data.product));
       })
       .catch((err) => {
         console.log(err);
