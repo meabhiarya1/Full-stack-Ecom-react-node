@@ -1,15 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
-import { FaCartArrowDown } from "react-icons/fa";
-import { IoReorderThree } from "react-icons/io5";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { CgProfile } from "react-icons/cg";
 
 import { cartSliceActions } from "../../Store/cartReducer";
 import "./scrollbar.css";
-import axios from "axios";
+import NavBar from "../../Component/NavBar";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -17,173 +13,15 @@ const Home = () => {
 
   const productData = useSelector((state) => state.data);
   const cartData = useSelector((state) => state.cart);
-  const [userId, setUserId] = useState(null);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  // const handleToggleDropdown = () => {
-  //   setIsDropdownOpen(!isDropdownOpen);
-  // };
-
-  // console.log(productData);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    // console.log(token)
-    const verifyToken = async () => {
-      try {
-        const response = await axios.post("http://localhost:5000/verify", {
-          token,
-        });
-        const userId = response.data.userId;
-        setUserId(userId);
-
-        // console.log(userId);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    verifyToken();
-  }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    setUserId(false);
-    setIsDropdownOpen(false);
+  const handleProductClick = (id) => {
+    navigate(`/productdetail/${id}`);
   };
 
   return (
     <div>
       {/* Navbar */}
-      <div className="bg-[#14628f] md:rounded-b-xl  rounded-b-2xl">
-        <div className="h-20 flex items-center justify-between w-full ">
-          {/* left navbar */}
-          <div className="flex items-center justify-center ">
-            <div className="md:mx-4 ml-2 flex justify-center lg:w-24 h-full w-12 md:w-20">
-              <img
-                src="https://websitedemos.net/brandstore-02/wp-content/uploads/sites/150/2018/12/logo1-free-img-140x47.png"
-                alt="logo"
-              />
-            </div>
-
-            <div className="p-2 text-sm md:mx-2 font-bold sm:font-medium md:text-[15px] hover:bg-black border-2 hover:cursor-pointer rounded-xl mr-1">
-              Home
-            </div>
-
-            <div className="p-2 text-sm md:mx-2 font-bold  sm:font-medium md:text-[15px] hover:bg-black border-2 hover:cursor-pointer rounded-xl mr-1">
-              Men
-            </div>
-            <div className="p-2 text-sm md:mx-2 font-bold  sm:font-medium md:text-[15px] hover:bg-black border-2 hover:cursor-pointer rounded-xl mr-1">
-              Women
-            </div>
-            <div className="p-2 text-sm md:mx-2 font-bold sm:font-medium md:text-[15px] hover:bg-black border-2 hover:cursor-pointer rounded-xl">
-              Kids
-            </div>
-          </div>
-
-          {/* right navbar */}
-          <div className="flex mx-4">
-            <div className="items-center bg-white md:text-sm rounded-xl mx-1 sm:flex hidden cursor-pointer">
-              <input
-                type="search"
-                className="p-1 m-1 rounded-xl no-border outline-none text-black"
-                placeholder="Search Here!!!"
-              />
-              <CiSearch
-                style={{
-                  color: "black",
-                  marginRight: "8px",
-                  cursor: "pointer",
-                  fontWeight: "bolder",
-                  fontSize: "1.5rem",
-                }}
-              />
-            </div>
-
-            {!userId && (
-              <div className="bg-[#14628f] border-2 items-center p-2 rounded-xl hover:bg-black mx-2 hover:cursor-pointer hidden lg:flex">
-                <button
-                  className="font-medium text-sm"
-                  onClick={() => navigate("/login")}
-                >
-                  Customer
-                </button>
-              </div>
-            )}
-
-            {!userId && (
-              <div className="bg-[#14628f] items-center p-2 rounded-xl hover:bg-black mx-3 border-2  hover:cursor-pointer hidden lg:flex">
-                <button
-                  className="font-medium text-sm"
-                  onClick={() => navigate("/sellerlogin")}
-                >
-                  Seller
-                </button>
-              </div>
-            )}
-
-            <div className=" items-center text-xl md:text-3xl mx-2 sm:flex hidden">
-              <FaCartArrowDown style={{ cursor: "pointer" }} />
-            </div>
-
-            <div className="relative flex">
-              {userId && (
-                <div
-                  className="items-center text-xl md:text-3xl mx-2 mt-1 sm:flex hidden"
-                  onMouseEnter={() => setIsDropdownOpen(true)}
-                >
-                  <CgProfile style={{ cursor: "pointer" }} />
-                </div>
-              )}
-
-              {isDropdownOpen && (
-                <div className="absolute right-0 mt-12 w-48 bg-white rounded-lg mr-2">
-                  <div className="py-1 rounded-lg">
-                    {/* Profile link */}
-                    <button
-                      className="block px-4 py-2 text-gray-800 hover:bg-gray-200 w-[100%] font-semibold"
-                      onMouseEnter={() => setIsDropdownOpen(true)}
-                      onMouseLeave={() => setIsDropdownOpen(false)}
-                    >
-                      Profile
-                    </button>
-                    <div className="bg-gray-200 w-[100%] h-[1px]"></div>
-                    {/* Logout link */}
-                    <button
-                      className="block px-4 py-2 text-gray-800 hover:bg-gray-200 w-[100%] font-semibold"
-                      onMouseEnter={() => setIsDropdownOpen(true)}
-                      onMouseLeave={() => setIsDropdownOpen(false)}
-                      onClick={handleLogout}
-                    >
-                      Logout
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <div className=" items-center text-3xl sm:hidden flex h-40">
-              <IoReorderThree style={{ cursor: "pointer" }} />
-            </div>
-          </div>
-        </div>
-
-        <div className="flex items-center bg-white md:text-sm rounded-full sm:hidden mx-[2px]">
-          <input
-            type="search"
-            className="p-1 rounded-full border-0 text-black w-full ml-3 outline-none"
-            placeholder="Search Here!!!"
-          />
-          <CiSearch
-            style={{
-              color: "black",
-              marginRight: "8px",
-              cursor: "pointer",
-              fontWeight: "bolder",
-              fontSize: "1.5rem",
-            }}
-          />
-        </div>
-      </div>
+      <NavBar />
 
       <div className="h-auto w-full flex ">
         {/* Left sidebar */}
@@ -249,7 +87,8 @@ const Home = () => {
           {productData.map((product, index) => (
             <div
               key={index}
-              className="border h-auto my-8 rounded-xl bg-white text-black sm:min-w-[18rem] max-w-[10rem]"
+              onClick={() => handleProductClick(product.id)}
+              className="border h-auto my-8 rounded-xl bg-white text-black sm:min-w-[18rem] max-w-[10rem] cursor-pointer hover:bg-gradient-to-b from-black to-transparent"
             >
               <div className="w-full flex items-center justify-center p-3">
                 <img
@@ -263,7 +102,7 @@ const Home = () => {
                 {product.productBrand}
               </div>
 
-              <div className="flex p-1 pl-2 sm:font-semibold text-xs mb-3 h-8 justify-center ">
+              <div className="flex p-1 pl-2 sm:font-semibold text-xs mb-2 h-8 justify-center ">
                 {product.productName}
               </div>
 

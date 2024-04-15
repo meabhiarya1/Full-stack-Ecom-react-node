@@ -13,6 +13,17 @@ exports.getAllProducts = async (req, res, next) => {
   }
 };
 
+exports.getProductDetail = async (req, res, next) => {
+  try {
+    const product = await Products.findByPk(req.params.productId);
+    // console.log(product)
+    res.status(200).json({ product });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 exports.addProduct = async (req, res, next) => {
   const {
     productName,
