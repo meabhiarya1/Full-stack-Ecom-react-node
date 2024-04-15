@@ -45,6 +45,12 @@ const Home = () => {
     verifyToken();
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setUserId(false);
+    setIsDropdownOpen(false);
+  };
+
   return (
     <div>
       {/* Navbar */}
@@ -119,34 +125,37 @@ const Home = () => {
               <FaCartArrowDown style={{ cursor: "pointer" }} />
             </div>
 
-            <div className="relative">
+            <div className="relative flex">
               {userId && (
                 <div
                   className="items-center text-xl md:text-3xl mx-2 mt-1 sm:flex hidden"
                   onMouseEnter={() => setIsDropdownOpen(true)}
-                  onMouseLeave={() => setIsDropdownOpen(false)}
                 >
                   <CgProfile style={{ cursor: "pointer" }} />
                 </div>
               )}
 
               {isDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg">
-                  <div className="py-1">
+                <div className="absolute right-0 mt-12 w-48 bg-white rounded-lg mr-2">
+                  <div className="py-1 rounded-lg">
                     {/* Profile link */}
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                    <button
+                      className="block px-4 py-2 text-gray-800 hover:bg-gray-200 w-[100%] font-semibold"
+                      onMouseEnter={() => setIsDropdownOpen(true)}
+                      onMouseLeave={() => setIsDropdownOpen(false)}
                     >
                       Profile
-                    </a>
+                    </button>
+                    <div className="bg-gray-200 w-[100%] h-[1px]"></div>
                     {/* Logout link */}
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                    <button
+                      className="block px-4 py-2 text-gray-800 hover:bg-gray-200 w-[100%] font-semibold"
+                      onMouseEnter={() => setIsDropdownOpen(true)}
+                      onMouseLeave={() => setIsDropdownOpen(false)}
+                      onClick={handleLogout}
                     >
                       Logout
-                    </a>
+                    </button>
                   </div>
                 </div>
               )}
