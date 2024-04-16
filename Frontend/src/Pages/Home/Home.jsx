@@ -11,7 +11,8 @@ const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const productData = useSelector((state) => state.data);
+  const productData = useSelector((state) => state.product);
+
   const cartData = useSelector((state) => state.cart);
 
   const handleProductClick = (id) => {
