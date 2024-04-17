@@ -12,6 +12,7 @@ const Home = () => {
   const dispatch = useDispatch();
 
   const productData = useSelector((state) => state.product);
+  // console.log(productData)
 
   const cartData = useSelector((state) => state.cart);
 

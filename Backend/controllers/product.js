@@ -34,11 +34,11 @@ exports.addProduct = async (req, res, next) => {
     productPrice,
     productQuantity,
   } = req.body;
-  console.log(Data);
+  // console.log(Data);
   try {
     // let product;
     // for (const data of Data) {
-    //   console.log(data);
+    //   // console.log(data);
     //   product = await Products.create({
     //     productName: data.productName || data.title,
     //     productBrand: data.productBrand || data.brand,
@@ -48,8 +48,8 @@ exports.addProduct = async (req, res, next) => {
     //     productPrice: data.productPrice || data.price,
     //     productQuantity: "5",
     //   });
-    //   console.log(data)
-    //   break;
+    //   // console.log(data)
+    //   // break;
     // }
 
     const product = await Products.create({

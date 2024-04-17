@@ -5,10 +5,11 @@ import { CiSearch } from "react-icons/ci";
 import { FaCartArrowDown } from "react-icons/fa";
 import { IoReorderThree } from "react-icons/io5";
 import { useEffect } from "react";
-import { CgProfile } from "react-icons/cg";
+import { CgCollage, CgProfile } from "react-icons/cg";
 import { FaPlus } from "react-icons/fa6";
 import axios from "axios";
 import { FaMinus } from "react-icons/fa";
+import { cartSliceActions } from "../Store/cartReducer";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ const NavBar = () => {
   const [userId, setUserId] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isCartdownOpen, setIsCartdownOpen] = useState(false);
+  const dispatch = useDispatch()
 
   const cartState = useSelector((state) => state.cart);
   console.log(cartState);
@@ -38,6 +40,25 @@ const NavBar = () => {
     };
     verifyToken();
   }, []);
+
+  useEffect(() => {
+    const fetchCartData = async (userId) => {
+      try {
+        const response = await axios.get(`http://localhost:5000/getcart/${userId}`);
+        console.log(response.data)
+        // Assuming the response contains cart data as an array of items
+        dispatch(cartSliceActions.addItem(response.data.cart));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    // Only fetch cart data if userId is not false
+    if (userId) {
+      fetchCartData(userId);
+    }
+  }, [userId]);
+
 
   const handleLogout = () => {
     localStorage.removeItem("token");
