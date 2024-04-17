@@ -30,10 +30,7 @@ const Users = sequelize.define("user", {
     allowNull: false,
   },
 
-  isLogged: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: false,
-  },
+
 });
 
 module.exports = Users;

@@ -21,6 +21,20 @@ const ProductDetail = () => {
     fetchProduct();
   }, [productId]);
 
+  const handleCart = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await axios.post(`http://localhost:5000/addtocart`, {
+        productId: productId,
+        cart: 1,
+        token,
+      });
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <NavBar />
@@ -44,9 +58,15 @@ const ProductDetail = () => {
                 {product.productDesc}
               </p>
               <p className="text-lg text-slate-300 mt-2">
-                <span className="font-semibold">Brand:</span> {product.productBrand}
+                <span className="font-semibold">Brand:</span>{" "}
+                {product.productBrand}
               </p>
-              <button className="my-8 bg-[#14628f] border-2 p-4 rounded-lg font-semibold">ADD TO CART</button>
+              <button
+                className="my-8 bg-[#14628f] border-2 p-4 rounded-lg font-semibold"
+                onClick={handleCart}
+              >
+                ADD TO CART
+              </button>
             </div>
           </div>
         )}

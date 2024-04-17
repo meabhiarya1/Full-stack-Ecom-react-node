@@ -34,7 +34,7 @@ exports.addProduct = async (req, res, next) => {
     productPrice,
     productQuantity,
   } = req.body;
-  // console.log(Data);
+  console.log(Data);
   try {
     // let product;
     // for (const data of Data) {
@@ -48,8 +48,8 @@ exports.addProduct = async (req, res, next) => {
     //     productPrice: data.productPrice || data.price,
     //     productQuantity: "5",
     //   });
-    //   // console.log(product)
-    //   // break;
+    //   console.log(data)
+    //   break;
     // }
 
     const product = await Products.create({
@@ -64,6 +64,7 @@ exports.addProduct = async (req, res, next) => {
     res.status(200).json(product);
   } catch (error) {
     console.log(error);
+    res.status(500).json(error);
   }
 };
 
