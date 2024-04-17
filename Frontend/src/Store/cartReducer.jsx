@@ -7,12 +7,12 @@ const cartSlice = createSlice({
   initialState: initialState,
   reducers: {
     addItem(state, action) {
-      return [...state, action.payload]
+      return (state = action.payload);
     },
   },
 });
 
-export const cartSliceActions = cartSlice.actions;
+export const cartSliceActions = cartSlice.actions; //actions means functions like : additem
 const cartSliceReducers = cartSlice.reducer;
 
 export default cartSliceReducers;

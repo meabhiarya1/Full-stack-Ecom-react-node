@@ -23,7 +23,10 @@ exports.addToCart = async (req, res, next) => {
         userId: userId,
       });
     }
-    res.status(200).json({ cartItems });
+    const updatedCartItems = await Cart.findAll({ where: { userId: userId } });
+    const totalCartValue = updatedCartItems.reduce((acc, item) => acc + item.cart, 0);
+
+    res.status(200).json({ totalCartValue });
   } catch (error) {
     console.log(error);
     res.status(500).json(error);

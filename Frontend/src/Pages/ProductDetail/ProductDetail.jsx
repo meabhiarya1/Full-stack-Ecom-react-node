@@ -2,10 +2,14 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import NavBar from "../../Component/NavBar";
+import { useDispatch, useSelector } from "react-redux";
+import { cartSliceActions } from "../../Store/cartReducer";
 
 const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const { productId } = useParams();
+  const dispatch = useDispatch();
+
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -29,7 +33,8 @@ const ProductDetail = () => {
         cart: 1,
         token,
       });
-      console.log(response);
+      console.log(response.data.totalCartValue);
+      dispatch(cartSliceActions.addItem(response.data.totalCartValue));
     } catch (error) {
       console.log(error);
     }

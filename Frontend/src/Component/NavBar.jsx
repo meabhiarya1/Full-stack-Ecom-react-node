@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { FaCartArrowDown } from "react-icons/fa";
@@ -15,6 +16,9 @@ const NavBar = () => {
   const [userId, setUserId] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isCartdownOpen, setIsCartdownOpen] = useState(false);
+
+  const cartState = useSelector((state) => state.cart);
+  console.log(cartState);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -84,7 +88,7 @@ const NavBar = () => {
         </div>
 
         {/* right navbar */}
-        <div className="flex mx-4">
+        <div className="flex mx-2">
           {/* search box */}
           <div className="items-center bg-white md:text-sm rounded-xl mx-1 sm:flex hidden cursor-pointer">
             <input
@@ -127,8 +131,9 @@ const NavBar = () => {
             </div>
           )}
 
-          <div className="relative flex">
+          <div className="relative">
             {/* cart */}
+            <span className="flex items-center justify-center">{cartState}</span>
             <div
               className="justify-center items-center text-xl md:text-3xl mx-2 sm:flex hidden "
               onMouseEnter={handleCartMouseEnter}
