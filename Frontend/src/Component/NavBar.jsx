@@ -45,15 +45,14 @@ const NavBar = () => {
     const fetchCartData = async (userId) => {
       try {
         const response = await axios.get(`http://localhost:5000/getcart/${userId}`);
-        console.log(response.data)
+        // console.log(response.data)
         // Assuming the response contains cart data as an array of items
-        dispatch(cartSliceActions.addItem(response.data.cart));
+        const totalCart = response.data.cart.reduce((acc, current) => acc + current, 0);
+        dispatch(cartSliceActions.addItem(totalCart));
       } catch (error) {
         console.log(error);
       }
     };
-
-    // Only fetch cart data if userId is not false
     if (userId) {
       fetchCartData(userId);
     }

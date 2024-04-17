@@ -46,7 +46,7 @@ exports.getCart = async (req, res, next) => {
     }
     
     // Assuming each user has only one cart, we access the first cart in the array
-    const cart = cartData[0].cart;
+    const cart = cartData.map(item => item.cart);
 
     const productIds = cartData.map(item => item.productId);
     
