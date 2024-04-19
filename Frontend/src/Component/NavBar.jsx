@@ -17,10 +17,10 @@ const NavBar = () => {
   const [userId, setUserId] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isCartdownOpen, setIsCartdownOpen] = useState(false);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const cartState = useSelector((state) => state.cart);
-  console.log(cartState);
+  // console.log(cartValue);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -44,11 +44,17 @@ const NavBar = () => {
   useEffect(() => {
     const fetchCartData = async (userId) => {
       try {
-        const response = await axios.get(`http://localhost:5000/getcart/${userId}`);
-        // console.log(response.data)
-        // Assuming the response contains cart data as an array of items
-        const totalCart = response.data.cart.reduce((acc, current) => acc + current, 0);
-        dispatch(cartSliceActions.addItem(totalCart));
+        const response = await axios.get(
+          `http://localhost:5000/getcart/${userId}`
+        );
+
+        let totalCartValue = 0;
+
+        for (const productId in response.data) {
+          totalCartValue += response.data[productId];
+        }
+        console.log(response.data);
+        dispatch(cartSliceActions.addItem(totalCartValue));
       } catch (error) {
         console.log(error);
       }
@@ -58,11 +64,11 @@ const NavBar = () => {
     }
   }, [userId]);
 
-
   const handleLogout = () => {
     localStorage.removeItem("token");
     setUserId(false);
     setIsDropdownOpen(false);
+    dispatch(cartSliceActions.addItem(0));
   };
 
   const handleCartMouseEnter = () => {
@@ -81,7 +87,7 @@ const NavBar = () => {
   };
 
   return (
-    <div className="bg-[#14628f] md:rounded-b-xl  rounded-b-2xl">
+    <div className="bg-[#14628f] md:rounded-b-xl rounded-b-2xl">
       <div className="h-20 flex items-center justify-between w-full ">
         {/* left navbar */}
         <div className="flex items-center justify-center ">
@@ -153,12 +159,16 @@ const NavBar = () => {
 
           <div className="relative">
             {/* cart */}
-            <span className="flex items-center justify-center">{cartState}</span>
             <div
-              className="justify-center items-center text-xl md:text-3xl mx-2 sm:flex hidden "
+              className="justify-center items-center text-xl md:text-3xl mx-2 sm:flex hidden mt-2"
               onMouseEnter={handleCartMouseEnter}
             >
               <FaCartArrowDown style={{ cursor: "pointer" }} />
+              {/* {cartState > 0 && ( */}
+              <span className="absolute -top-[10px] -right-1 bg-[#14628f] text-white border-2 rounded-full px-2 py-1 text-xs">
+                {cartState}
+              </span>
+              {/* )} */}
             </div>
 
             {isCartdownOpen && (
