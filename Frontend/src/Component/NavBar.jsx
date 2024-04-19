@@ -47,8 +47,6 @@ const NavBar = () => {
           `http://localhost:5000/getcart/${userId}`
         );
 
-        // const products = await axios.get("http://localhost:5000/")
-
         let totalCartValue = 0;
         let updatedItems = {}
 
@@ -66,7 +64,21 @@ const NavBar = () => {
     if (userId) {
       fetchCartData(userId);
     }
-  }, [userId, setItems]); 
+  }, [userId, cartState]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        let products = await axios.get(`http://localhost:5000/getuserproduct${userId}`)
+        console.log(products)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    if (userId) {
+      fetchProducts()
+    }
+  }, [])
 
   const handleLogout = () => {
     localStorage.removeItem("token");

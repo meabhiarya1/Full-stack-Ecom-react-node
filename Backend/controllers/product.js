@@ -1,4 +1,5 @@
 const Products = require("../models/product");
+const Cart = require("../models/cart")
 const Data = require("../controllers/jsondata");
 
 exports.getAllProducts = async (req, res, next) => {
@@ -23,6 +24,17 @@ exports.getProductDetail = async (req, res, next) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+exports.getUserProduct = async (req, res, next) => {
+  const id = req.params.userId
+  try {
+    const product = await Cart.findAll({ where: { userId: id } })
+    console.log(product.dataValues[0].productId)
+  } catch (error) {
+
+  }
+
+}
 
 exports.addProduct = async (req, res, next) => {
   const {
