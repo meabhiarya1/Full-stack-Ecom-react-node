@@ -17,10 +17,11 @@ const NavBar = () => {
   const [userId, setUserId] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isCartdownOpen, setIsCartdownOpen] = useState(false);
+  const [items, setItems] = useState({});
   const dispatch = useDispatch();
 
   const cartState = useSelector((state) => state.cart);
-  // console.log(cartValue);
+  console.log(cartState);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -31,9 +32,7 @@ const NavBar = () => {
           token,
         });
         const userId = response.data.userId;
-        // console.log(userId);
         setUserId(userId);
-        // console.log(userId);
       } catch (error) {
         console.log(error);
       }
@@ -48,13 +47,18 @@ const NavBar = () => {
           `http://localhost:5000/getcart/${userId}`
         );
 
+        // const products = await axios.get("http://localhost:5000/")
+
         let totalCartValue = 0;
+        let updatedItems = {}
 
         for (const productId in response.data) {
           totalCartValue += response.data[productId];
+          updatedItems[productId] = response.data[productId];
         }
-        console.log(response.data);
+        // console.log(response.data);
         dispatch(cartSliceActions.addItem(totalCartValue));
+        setItems(updatedItems);
       } catch (error) {
         console.log(error);
       }
@@ -62,7 +66,7 @@ const NavBar = () => {
     if (userId) {
       fetchCartData(userId);
     }
-  }, [userId]);
+  }, [userId, setItems]); 
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -173,7 +177,7 @@ const NavBar = () => {
 
             {isCartdownOpen && (
               <div
-                className="absolute right-0 mt-11 w-48 bg-white rounded-lg mr-2 flex justify-center"
+                className="absolute right-0 mt-2 w-56 bg-white rounded-lg mr-2 flex justify-center"
                 onMouseEnter={handleCartMouseEnter}
               >
                 <div className="py-1 rounded-lg flex ">
@@ -182,11 +186,17 @@ const NavBar = () => {
                     className="flex px-4 py-2 text-gray-800 hover:bg-gray-200 w-[100%] font-semibold items-center justify-center rounded-lg"
                     onMouseLeave={handleMouseLeave}
                   >
-                    <FaMinus className="mr-2 hover:bg-gray-400 w-6 h-6" />
-                    <div className="mr-1 ">Product</div>
-                    <FaPlus className="ml-1 hover:bg-gray-400 w-6 h-6" />
+                    {/* <FaMinus className="mr-2 hover:bg-gray-400 w-6 h-6" /> */}
+                    <div className="">
+                      {Object.entries(items).map(([productId, cart]) => (
+                        <div key={productId} className="mr-1">
+                          Product ID: {productId}, Cart: {cart}
+                          <div className="bg-gray-200 w-[100%] h-[1px]"></div>
+                        </div>
+                      ))}
+                    </div>
+                    {/* <FaPlus className="ml-1 hover:bg-gray-400 w-6 h-6" /> */}
                   </div>
-                  {/* <div className="bg-gray-200 w-[100%] h-[1px]"></div> */}
                 </div>
               </div>
             )}
