@@ -56,7 +56,7 @@ const NavBar = () => {
         }
         // console.log(response.data);
         dispatch(cartSliceActions.addItem(totalCartValue));
-        setItems(updatedItems);
+        // setItems(updatedItems);
       } catch (error) {
         console.log(error);
       }
@@ -64,21 +64,29 @@ const NavBar = () => {
     if (userId) {
       fetchCartData(userId);
     }
-  }, [userId, cartState]);
+  }, [userId]);
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchProducts = async (userId) => {
       try {
-        let products = await axios.get(`http://localhost:5000/getuserproduct${userId}`)
-        console.log(products)
+        let products = await axios.get(`http://localhost:5000/getuserproduct/${userId}`);
+        const mappedData = products.data.products.map(item => ({
+          productId: item.productId,
+          cart: item.cart,
+          productName: item.product.productName
+        }));
+        console.log(mappedData)
+        setItems(mappedData)
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-    }
+    };
+
     if (userId) {
-      fetchProducts()
+      fetchProducts(userId);
     }
-  }, [])
+  }, [userId, cartState]);
+
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -200,11 +208,12 @@ const NavBar = () => {
                   >
                     {/* <FaMinus className="mr-2 hover:bg-gray-400 w-6 h-6" /> */}
                     <div className="">
-                      {Object.entries(items).map(([productId, cart]) => (
-                        <div key={productId} className="mr-1">
-                          Product ID: {productId}, Cart: {cart}
-                          <div className="bg-gray-200 w-[100%] h-[1px]"></div>
-                        </div>
+                      {items.map(item => (
+                        <li key={item.productId}>
+                          <div>Product ID: {item.productId}</div>
+                          <div>Cart: {item.cart}</div>
+                          <div>Product Name: {item.productName}</div>
+                        </li>
                       ))}
                     </div>
                     {/* <FaPlus className="ml-1 hover:bg-gray-400 w-6 h-6" /> */}

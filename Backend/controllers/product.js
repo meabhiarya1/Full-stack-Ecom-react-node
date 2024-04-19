@@ -26,14 +26,35 @@ exports.getProductDetail = async (req, res, next) => {
 };
 
 exports.getUserProduct = async (req, res, next) => {
-  const id = req.params.userId
   try {
-    const product = await Cart.findAll({ where: { userId: id } })
-    console.log(product.dataValues[0].productId)
+    const userId = req.params.userId;
+    const cartItems = await Cart.findAll({ where: { userId } });
+    const fetchedProducts = await Promise.all(cartItems.map(async (item) => {
+      const product = await fetchProductById(item.productId);
+      return {
+        productId: item.productId,
+        cart: item.cart,
+        product // Include the entire product object if needed
+      };
+    }));
+    // console.log("Fetched products:", fetchedProducts);
+    res.status(200).json({ products: fetchedProducts });
   } catch (error) {
-
+    console.error("Error:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
+};
 
+
+// Function to fetch product by ID from database
+async function fetchProductById(productId) {
+  try {
+    const product = await Products.findByPk(productId);
+    return product;
+  } catch (error) {
+    console.error(`Error fetching product with ID ${productId}:`, error);
+    throw error;
+  }
 }
 
 exports.addProduct = async (req, res, next) => {
