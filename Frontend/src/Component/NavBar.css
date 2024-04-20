@@ -1,0 +1,18 @@
+/* Custom scrollbar styles */
+/* Width of the scrollbar */
+.scrollbar-w-2::-webkit-scrollbar {
+    width: 10px; /* Adjust as needed */
+  }
+  
+  /* Track (the background of the scrollbar) */
+  .scrollbar-track-gray-200::-webkit-scrollbar-track {
+    background: #14628f; /* Adjust as needed */
+    border-radius: 9999px;
+  }
+  
+  /* Handle (the draggable part of the scrollbar) */
+  .scrollbar-thumb-gray-500::-webkit-scrollbar-thumb {
+    background: #ffffff; /* Adjust as needed */
+    border-radius: 9999px;
+  }
+  

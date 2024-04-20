@@ -10,6 +10,7 @@ import { FaPlus } from "react-icons/fa6";
 import axios from "axios";
 import { FaMinus } from "react-icons/fa";
 import { cartSliceActions } from "../Store/cartReducer";
+import "./NavBar.css";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -48,7 +49,7 @@ const NavBar = () => {
         );
 
         let totalCartValue = 0;
-        let updatedItems = {}
+        let updatedItems = {};
 
         for (const productId in response.data) {
           totalCartValue += response.data[productId];
@@ -69,14 +70,17 @@ const NavBar = () => {
   useEffect(() => {
     const fetchProducts = async (userId) => {
       try {
-        let products = await axios.get(`http://localhost:5000/getuserproduct/${userId}`);
-        const mappedData = products.data.products.map(item => ({
+        let products = await axios.get(
+          `http://localhost:5000/getuserproduct/${userId}`
+        );
+        const mappedData = products.data.products.map((item) => ({
           productId: item.productId,
           cart: item.cart,
-          productName: item.product.productName
+          productName: item.product.productName,
+          productImage: item.product.productImage,
         }));
-        console.log(mappedData)
-        setItems(mappedData)
+        console.log(mappedData);
+        setItems(mappedData);
       } catch (error) {
         console.log(error);
       }
@@ -86,7 +90,6 @@ const NavBar = () => {
       fetchProducts(userId);
     }
   }, [userId, cartState]);
-
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -197,24 +200,44 @@ const NavBar = () => {
 
             {isCartdownOpen && (
               <div
-                className="absolute right-0 mt-2 w-56 bg-white rounded-lg mr-2 flex justify-center"
+                className="absolute right-0 mt-2 w-96 bg-white rounded-lg mr-2 flex justify-center border-2 border-slate-300"
                 onMouseEnter={handleCartMouseEnter}
               >
-                <div className="py-1 rounded-lg flex ">
+                <div className="py-1 rounded-lg flex">
                   {/* Product link */}
                   <div
                     className="flex px-4 py-2 text-gray-800 hover:bg-gray-200 w-[100%] font-semibold items-center justify-center rounded-lg"
                     onMouseLeave={handleMouseLeave}
                   >
                     {/* <FaMinus className="mr-2 hover:bg-gray-400 w-6 h-6" /> */}
-                    <div className="">
-                      {items.map(item => (
-                        <li key={item.productId}>
-                          <div>Product ID: {item.productId}</div>
-                          <div>Cart: {item.cart}</div>
-                          <div>Product Name: {item.productName}</div>
-                        </li>
+
+                    <div className="bg-slate-200 rounded-xl h-96 overflow-x-auto relative scrollbar-w-2 scrollbar-track-gray-200 scrollbar-thumb-gray-500">
+                      {items.map((item) => (
+                        <div
+                          key={item.productId}
+                          className="flex m-1 items-center rounded-xl bg-slate-800"
+                        >
+                          <div className="w-1/3 rounded-xl m-2">
+                            <img
+                              className="w-20 h-auto rounded-xl"
+                              src={item.productImage}
+                              alt="Product Image"
+                            />
+                          </div>
+                          <div className="flex flex-col items-center w-2/3">
+                            <div className="text-xs m-2 bg-slate-500 rounded-xl text-white p-3">
+                              {item.productName}
+                            </div>
+                            <div className="p-1 text-white text-xs mb-3">
+                              Quantity: {item.cart}
+                            </div>
+                          </div>
+                        </div>
                       ))}
+                    </div>
+
+                    <div className="p-3 absolute -bottom-10 left-0 right-0 mt-8 flex items-center justify-center bg-[#14628f] text-white rounded-lg border-2">
+                      Buy Now
                     </div>
                     {/* <FaPlus className="ml-1 hover:bg-gray-400 w-6 h-6" /> */}
                   </div>
